@@ -1,10 +1,12 @@
+import reservaNatural.*
 
 describe "test de la reserva" {
-//probar cantidadTotalBiomasa(), habitatsDesequilibrados(), contieneEspecie(), especieEstaEnTodosLosHabitats() etc
+// probar cantidadTotalBiomasa(), habitatsDesequilibrados(), 
+// probar contieneEspecie(), especieEstaEnTodosLosHabitats() etc
 
 }
 
 describe "test de habitats" {
-//probar totalBiomasa(), producirIncendio(), 	
+// probar totalBiomasa(), producirIncendio(), 	
 	
 }

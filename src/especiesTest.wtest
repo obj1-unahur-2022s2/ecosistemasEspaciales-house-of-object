@@ -1,3 +1,4 @@
+import especies.*
 
 describe "tests de animales" {
 //probar los métodos biomasa(), peso(), consecuenciasDelIncendio, esGrande(),
