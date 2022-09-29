@@ -50,9 +50,12 @@ class Habitat {
 	
 	// Producir incendio
 	method producirIncendioEnHabitat(unHabitat) {
-		// self.plantasEnHabitat(.forEach({ p => p.accion() }) // Crear método con efecto en Planta.
-		// self.animalesEnHabitat(.forEach({ a => a.accion() }) // Crear método con efecto en Animal.
+		seresVivos.forEach({sv=>sv.consecuenciaIncendio()})
+		seresVivos.removeAll(self.eliminarMuertos())
 	}
+	
+	method eliminarMuertos()= seresVivos.map({sv=>not sv.estaVivo()})
+	
 	
 // Las plantas pequeñas se mueren mientras que las grandes disminuyen su tamaño en 5 unidades. 
 // Los animales sufren consecuencias según su modo de locomoción: 

@@ -9,20 +9,7 @@ class EspecieFauna {
 	// Devuelve la biomasa total de los animales de la especie.
 	method biomasa() = animales.sum({a => a.biomasa()})
 	
-	// Saber si la especie está en equilibrio. 
-	// method esEspecieEnEquilibrio() = self.hayCantidadGrandesMenorAPequenios() and self.hayMediano()
-	
-	// Devuelve true si los ejemplares grandes es menor a 1/3 de la cantidad de pequeños.
-	// method hayCantidadGrandesMenorAPequenios() = self.cantidadGrandes() > self.cantidadChicos() * 0.3
-	
-	// Devuelve la cantidad de ejemplares grandes en la especie.
-	// method cantidadGrandes() = animales.count({ sv => sv.tamanio() == grande })
-	
-	// Devuelve la cantidad de ejemplares chicos en la especie.
-	// method cantidadChicos() = animales.count({ sv => sv.tamanio() == pequenio})
-	
-	// Devuelve true si hay al menos un ser vivo de tamanio mediano.
-	// method hayMediano() = animales.any( { sv => sv.tamanio() == mediano})
+
 }
 
 class EspecieFlora {
@@ -32,35 +19,37 @@ class EspecieFlora {
 	// Agrega una planta a la especia de flora.
 	method agregarPlanta(unaPlanta) = plantas.add(unaPlanta)
 	
-	// Devuelve la biomasa total de las plantas de la especie.
-	// method biomasa() = plantas.sum({a => a.biomasa()})
 	
-	// Devuelve true si los ejemplares grandes es menor a 1/3 de la cantidad de pequeños.
-	// method hayCantidadGrandesMenorAPequenios() = self.cantidadGrandes() > self.cantidadChicos() * 0.3
-	
-	// Devuelve la cantidad de ejemplares grandes en la especie.
-	// method cantidadGrandes() = plantas.count({ sv => sv.tamanio() == grande })
-	
-	// Devuelve la cantidad de ejemplares chicos en la especie.
-	// method cantidadChicos() = plantas.count({ sv => sv.tamanio() == pequenio})
 }
 
 // Fauna.
 class Animal {
-	const property pesoReferencia
 	const property especie
 	var property peso
 	// Duda. Peso al cuadrado sobre el ¿coeficiente propio de su especie?
-	var property biomasa = (peso ** 2) / pesoReferencia
-	var property tamanio
-	method tamanio() {
-		if (peso < pesoReferencia / 2) tamanio = pequenio
-		else if (peso > pesoReferencia * 2) tamanio = grande
-		else tamanio = mediano			
-		return tamanio
+	var property biomasa = (peso ** 2) / especie.pesoReferencia()
+	var property estaVivo= true 
+	method tamanio() {return 
+		if (self.esPequenio())  pequenio
+		else if (self.esGrande())   grande
+		else  mediano			
+		
 	}
 	// Método necesario para el object volar.
-	method esGrande() = peso > pesoReferencia * 2
+	method esGrande() = peso > especie.pesoReferencia() * 2
+	//metodo necesario para el peso.
+	method esPequenio()=peso < especie.pesoReferencia() / 2
+// Los animales sufren consecuencias según su modo de locomoción: 
+// Los que vuelan y son grandes, se salvan, los que nadan siempre se salvan. 
+// Los que corren solo se salvan si son medianos. Los que están quietos, nunca se salvan. 
+// Además, todos los animales pierden peso (en un 10%). 
+// Retirar del hábitat a todos los animales y plantas que hayan muerto por el incendio.
+	method consecuenciaIncendio(){
+		if(self.especie().formaLocomocion().seSalva(self))
+			peso *= 0.90
+		else 
+			estaVivo=false
+	}
 }
 
 // Flora.
@@ -70,12 +59,24 @@ class Planta {
 	var property altura
 	var property tamanio
 	var property biomasa = alturaReferencia.min(altura * 2)
+	var property estaVivo= true 
 	
 	method tamanio() {
-		if (altura < 10) tamanio = pequenio
+		if (self.esPequenio()) tamanio = pequenio
 		else tamanio = grande			
 		return tamanio
 	}
+		
+	method esGrande() = altura >=10
+	
+	method esPequenio()=not self.esGrande()
+// Las plantas pequeñas se mueren mientras que las grandes disminuyen su tamaño en 5 unidades. 
+
+	method consecuenciaIncendio(){
+		if (self.esPequenio()) estaVivo=false 
+		else altura-=5
+	}
+	
 }
 
 // Objetos para el method tamanio de las clases Animal y Planta.
@@ -96,5 +97,13 @@ object volar {
 }
 
 object nadar {
-	method seSalva(_) = true
+	method seSalva(animal) = true
+}
+
+object correr{
+	method seSalva(animal)=animal.tamanio()==mediano
+}
+
+object quieto{
+	method seSalva(animal) = false
 }

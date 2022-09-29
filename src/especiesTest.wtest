@@ -3,11 +3,16 @@ import especies.*
 describe "tests de animales" {
 //probar los métodos biomasa(), peso(), consecuenciasDelIncendio, esGrande(),
 //esPequenio(), esMediano(), estaVivo(), etc
-	
+	test "animal que corre"{
+	var felino=new EspecieFauna(pesoReferencia=80,formaLocomocion=correr)
+	var tony=new Animal( especie=felino,peso=100)
+	assert.equals(125,tony.biomasa())
+	}
 
 }
 
-describe "tests de plantas" {
+//describe "tests de plantas" {
 //probar los métodos biomasa(), altura(), consecuenciasDelIncendio, esGrande(),
 //esPequenio(), estaVivo() etc
-}
+
+//}
