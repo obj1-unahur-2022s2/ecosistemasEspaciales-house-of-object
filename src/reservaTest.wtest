@@ -3,10 +3,10 @@ import reservaNatural.*
 describe "test de la reserva" {
 // probar cantidadTotalBiomasa(), habitatsDesequilibrados(), 
 // probar contieneEspecie(), especieEstaEnTodosLosHabitats() etc
-
+	// test "x" {}
 }
 
 describe "test de habitats" {
 // probar totalBiomasa(), producirIncendio(), 	
-	
+	// test "x" {}
 }

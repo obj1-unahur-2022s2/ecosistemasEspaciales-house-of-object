@@ -1,5 +1,6 @@
 import especies.*
 
+// object reserva.
 object reserva {
 	const property habitats = []
 	
@@ -19,6 +20,7 @@ object reserva {
 	method hayEspecie(unaEspecie) = habitats.all({ h => h.hayEspecie(unaEspecie)})
 }
 
+// class Habitat.
 class Habitat {
 	const property seresVivos = []
 	
@@ -53,26 +55,7 @@ class Habitat {
 		seresVivos.forEach({sv=>sv.consecuenciaIncendio()})
 		seresVivos.removeAll(self.eliminarMuertos())
 	}
-	
+
+	// Lista con los seres vivos que están muertos --> not estaVivo().	
 	method eliminarMuertos()= seresVivos.map({sv=>not sv.estaVivo()})
-	
-	
-// Las plantas pequeñas se mueren mientras que las grandes disminuyen su tamaño en 5 unidades. 
-// Los animales sufren consecuencias según su modo de locomoción: 
-// Los que vuelan y son grandes, se salvan, los que nadan siempre se salvan. 
-// Los que corren solo se salvan si son medianos. Los que están quietos, nunca se salvan. 
-// Además, todos los animales pierden peso (en un 10%). 
-// Retirar del hábitat a todos los animales y plantas que hayan muerto por el incendio.
-
-	// Producir métodos que me devuelvan listas de plantas y animales para realizarles la acción.
-	// Usar .filter({})
-	
-	// Lista con las plantas presentes en el habitat.
-	method plantasEnHabitat() {}	// filter.
-
-	// Lista con animales presentes en el habitat.
-	method animalesEnHabitat() {} 	// filter.
-	
-	// object volar.
-	// object nadar.
 }

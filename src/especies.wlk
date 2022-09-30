@@ -15,7 +15,7 @@ class EspecieFlora {
 	method biomasa() = plantas.sum({a => a.biomasa()})
 }
 
-// Fauna.
+// class Animal.
 class Animal {
 	const property especie
 	var property peso
@@ -35,7 +35,7 @@ class Animal {
 	}
 }
 
-// Flora.
+// class Planta.
 class Planta {
 	const property especie
 	var property altura
