@@ -1,18 +1,73 @@
 import especies.*
 
 describe "tests de animales" {
-//probar los métodos biomasa(), peso(), consecuenciasDelIncendio, esGrande(),
-//esPequenio(), esMediano(), estaVivo(), etc
-	test "animal que corre"{
+	test "animal que corre y es mediano"{
 	var felino=new EspecieFauna(pesoReferencia=80,formaLocomocion=correr)
 	var tony=new Animal( especie=felino,peso=100)
 	assert.equals(125,tony.biomasa())
+	assert.notThat(tony.esGrande())
+	assert.equals(mediano, tony.tamanio())
+	tony.consecuenciaIncendio()
+	assert.equals(90, tony.peso())
+	assert.that(tony.estaVivo())
 	}
+	test "animal quieto y mediano que muere"{
+	var perezoso= new EspecieFauna(pesoReferencia=40,formaLocomocion=quieto)
+	var flash= new Animal(especie=perezoso, peso=20)
+	assert.equals(10,flash.biomasa())
+	assert.equals(mediano, flash.tamanio())
+	flash.consecuenciaIncendio()
+	assert.notThat(flash.estaVivo())
+	}
+	
+	test "animal volador y pequeño, que nuere"{
+	var ave=new EspecieFauna(pesoReferencia=10, formaLocomocion=volar)
+	var twity= new Animal(especie=ave, peso=2)
+	assert.equals(0.4,twity.biomasa())
+	assert.equals(pequenio, twity.tamanio())
+	twity.consecuenciaIncendio()
+	assert.notThat(twity.estaVivo())
+	}
+	
+	test "animal volador grande que vive"{
+	var aveGrande=new EspecieFauna(pesoReferencia=10, formaLocomocion=volar)
+	var condor= new Animal(especie=aveGrande, peso=25)
+	assert.equals(62.5,condor.biomasa())
+	assert.equals(grande, condor.tamanio())
+	condor.consecuenciaIncendio()
+	assert.that(condor.estaVivo())
+	assert.equals(22.5, condor.peso())
+	}
+	test "animal nadador grande que vive"{
+	var pez=new EspecieFauna(pesoReferencia=2, formaLocomocion=nadar)
+	var nemo= new Animal(especie=pez, peso=5)
+	assert.equals(12.5,nemo.biomasa())
+	assert.equals(grande, nemo.tamanio())
+	nemo.consecuenciaIncendio()
+	assert.that(nemo.estaVivo())
+	assert.equals(4.5, nemo.peso())
+}
 
 }
 
-//describe "tests de plantas" {
-//probar los métodos biomasa(), altura(), consecuenciasDelIncendio, esGrande(),
-//esPequenio(), estaVivo() etc
+describe "tests de plantas" {
+	test "plantas grande"{
+	var conifera=new EspecieFlora()
+	var arbol= new Planta(especie=conifera, altura=20)	
+	assert.equals(10 ,arbol.biomasa())
+	assert.equals(grande, arbol.tamanio())
+	arbol.consecuenciaIncendio()
+	assert.that(arbol.estaVivo())
+	assert.equals(15, arbol.altura())	
+	}
+	test "plantas pequenio"{
+	var flores=new EspecieFlora()
+	var rosa= new Planta(especie=flores, altura=4)	
+	assert.equals(8 ,rosa.biomasa())
+	assert.equals(pequenio, rosa.tamanio())
+	rosa.consecuenciaIncendio()
+	assert.notThat(rosa.estaVivo())	
+	}
+	
+}
 
-//}

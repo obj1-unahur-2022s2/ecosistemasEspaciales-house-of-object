@@ -54,17 +54,15 @@ class Animal {
 
 // Flora.
 class Planta {
-	const property alturaReferencia = 10
 	const property especie
 	var property altura
-	var property tamanio
-	var property biomasa = alturaReferencia.min(altura * 2)
+	var property biomasa = especie.alturaReferencia().min(altura * 2)
 	var property estaVivo= true 
 	
-	method tamanio() {
-		if (self.esPequenio()) tamanio = pequenio
-		else tamanio = grande			
-		return tamanio
+	method tamanio() {return
+		if (self.esPequenio()) pequenio
+		else grande			
+		
 	}
 		
 	method esGrande() = altura >=10
