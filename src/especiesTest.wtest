@@ -2,75 +2,137 @@ import especies.*
 
 describe "tests de animales" {
 	
-	test "animal que corre y es mediano"{
 	const felino = new EspecieFauna(pesoReferencia=80,formaLocomocion=correr)
 	const tony = new Animal( especie=felino,peso=100)
-	assert.equals(125,tony.biomasa())
-	assert.notThat(tony.esGrande())
-	assert.equals(mediano, tony.tamanio())
-	tony.consecuenciaIncendio()
-	assert.equals(90, tony.peso())
-	assert.that(tony.estaVivo())
-	}
-	
-	test "animal quieto y mediano que muere"{
 	const perezoso = new EspecieFauna(pesoReferencia=40,formaLocomocion=quieto)
 	const flash = new Animal(especie=perezoso, peso=20)
-	assert.equals(10,flash.biomasa())
-	assert.equals(mediano, flash.tamanio())
-	flash.consecuenciaIncendio()
-	assert.notThat(flash.estaVivo())
-	}
-	
-	test "animal volador y pequeño, que nuere"{
 	const ave = new EspecieFauna(pesoReferencia=10, formaLocomocion=volar)
 	const twity = new Animal(especie=ave, peso=2)
-	assert.equals(0.4,twity.biomasa())
-	assert.equals(pequenio, twity.tamanio())
-	twity.consecuenciaIncendio()
-	assert.notThat(twity.estaVivo())
-	}
-	
-	test "animal volador grande que vive"{
 	const aveGrande = new EspecieFauna(pesoReferencia=10, formaLocomocion=volar)
 	const condor = new Animal(especie=aveGrande, peso=25)
-	assert.equals(62.5,condor.biomasa())
-	assert.equals(grande, condor.tamanio())
-	condor.consecuenciaIncendio()
-	assert.that(condor.estaVivo())
-	assert.equals(22.5, condor.peso())
-	}
-	
-	test "animal nadador grande que vive"{
 	const pez = new EspecieFauna(pesoReferencia=2, formaLocomocion=nadar)
 	const nemo = new Animal(especie=pez, peso=5)
-	assert.equals(12.5,nemo.biomasa())
-	assert.equals(grande, nemo.tamanio())
-	nemo.consecuenciaIncendio()
-	assert.that(nemo.estaVivo())
-	assert.equals(4.5, nemo.peso())
-}
+	
+	test "La biomasa de tony es 125"{
+		assert.equals(125,tony.biomasa())
+	}
+	
+	test "tony no es grande"{
+		assert.notThat(tony.esGrande())
+	}
+	
+	test "tony es mediano"{
+		assert.equals(mediano, tony.tamanio())
+	}
+	
+	test "tony pierde un 10% de su peso tras el incendio"{
+		tony.consecuenciaIncendio()
+		assert.equals(90, tony.peso())
+	}
+	
+	test "tony sobrevive al incendio"{
+		assert.that(tony.estaVivo())
+	}
+	
+	test "La biomasa de flash es 10"{
+		assert.equals(10,flash.biomasa())
+	}
+	
+	test "flash es mediano"{	
+		assert.equals(mediano, flash.tamanio())	
+	}
+	
+	test "flash no sobrevive al incendio"{	
+		flash.consecuenciaIncendio()	
+		assert.notThat(flash.estaVivo())	
+	}
 
+	test "La biomasa de twity es 0.4"{		
+		assert.equals(0.4,twity.biomasa())	
+	}
+	
+
+	test "twity es pequeño"{	
+		assert.equals(pequenio, twity.tamanio())
+	}
+	
+	test "twity no sobrevive al incendio :("{
+		twity.consecuenciaIncendio()
+		assert.notThat(twity.estaVivo())
+	}
+
+	test "La biomasa de condor es 62.5"{	
+		assert.equals(62.5,condor.biomasa())
+	}
+
+	test "Condor tiene un tamaño grande"{
+		assert.equals(grande, condor.tamanio())
+	}
+	
+	test " Condor sobrevive al incendio"{
+		condor.consecuenciaIncendio()
+		assert.that(condor.estaVivo())	
+	}
+	
+	test "Condor pierde un 10% de su peso tras el incendio"{	
+		condor.consecuenciaIncendio()	
+		assert.equals(22.5, condor.peso())	
+	}
+	
+	test "La biomasa de nemo es 12.5"{			
+		assert.equals(12.5,nemo.biomasa())
+	}
+
+	test "nemo es un animal grande"{
+		assert.equals(grande, nemo.tamanio())
+	}
+	
+	test "nemo sobrevive al incendio"{
+		nemo.consecuenciaIncendio()
+		assert.that(nemo.estaVivo())
+	}
+	
+	test "nemo pierde un 10% de su peso tras el incendio"{
+		nemo.consecuenciaIncendio()
+		assert.equals(4.5, nemo.peso())
+	}
 }
 
 describe "tests de plantas" {
 	
-	test "planta grande"{
 	const conifera = new EspecieFlora()
-	const arbol = new Planta(especie=conifera, altura=20)	
-	assert.equals(10 ,arbol.biomasa())
-	assert.equals(grande, arbol.tamanio())
-	arbol.consecuenciaIncendio()
-	assert.that(arbol.estaVivo())
-	assert.equals(15, arbol.altura())	
+	const arbol = new Planta(especie=conifera, altura=20)
+	const flores = new EspecieFlora()
+	const rosa = new Planta(especie=flores, altura=4)
+	
+	test "Biomasa del arbol es 10"{	
+		assert.equals(10 ,arbol.biomasa())	
 	}
 	
-	test "planta pequenio"{
-	const flores = new EspecieFlora()
-	const rosa = new Planta(especie=flores, altura=4)	
-	assert.equals(8 ,rosa.biomasa())
-	assert.equals(pequenio, rosa.tamanio())
-	rosa.consecuenciaIncendio()
-	assert.notThat(rosa.estaVivo())	
+	test "El arbol es una planta grande"{	
+		assert.equals(grande, arbol.tamanio())	
+	}
+	
+	test "el arbol sobrevive al incendio"{
+		arbol.consecuenciaIncendio()
+		assert.that(arbol.estaVivo())
+	}
+	
+	test "El arbol pierde 5 de altura tras el incendio"{
+		arbol.consecuenciaIncendio()
+		assert.equals(15, arbol.altura())	
+	}
+	
+	test "Biomasa de la rosa es 8"{
+		assert.equals(8 ,rosa.biomasa())
+	}
+	
+	test "La rosa es una planta pequeña"{
+		assert.equals(pequenio, rosa.tamanio())
+	}
+	
+	test " la rosa no sobrevive al incendio"{
+		rosa.consecuenciaIncendio()
+		assert.notThat(rosa.estaVivo())	
 	}
 }

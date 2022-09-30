@@ -8,13 +8,13 @@ object reserva {
 	method agregarHabitat(unHabitat) = habitats.add(unHabitat)
 	
 	// Hábitat con mayor biomasa de la reserva. 
-	method habitatConMayorBiomasa() = habitats.max({ h => h.biomasa() })
+	method habitatConMayorBiomasa() = habitats.max({ h => h.totalBiomasa() })
 	
 	// Cantidad total de biomasa en la reserva, teniendo en cuenta todos los hábitats.
-	method cantidadTotalBiomasa() = habitats.sum({ h => h.biomasa() })
+	method totalBiomasa() = habitats.sum({ h => h.totalBiomasa() })
 	
 	// Lista con los hábitats de reserva que no están en equilibrio.
-	method habitatsEnDequilibrio() = habitats.map({ h => not h.esHabitatEnEquilibrio() })
+	method habitatsDesequilibrados() = habitats.filter({ h => not h.esHabitatEnEquilibrio() })
 	
 	// Devuelve si una especie dada está en todos los hábitats de la reserva.
 	method hayEspecie(unaEspecie) = habitats.all({ h => h.hayEspecie(unaEspecie) })
@@ -28,7 +28,7 @@ class Habitat {
 	method agregarSerVivo(unSerVivo) = seresVivos.add(unSerVivo)
 	
 	// Devuelve la suma de biomasa de todos los seres vivos del habitat.
-	method biomasa() = seresVivos.sum({ sv => sv.biomasa() })
+	method totalBiomasa() = seresVivos.sum({ sv => sv.biomasa() })
 	
 	// Saber si el hábitat está en equilibrio. 
 	// Cuando la cantidad de ejemplares grandes es menor a ⅓ de la cantidad de pequeños 

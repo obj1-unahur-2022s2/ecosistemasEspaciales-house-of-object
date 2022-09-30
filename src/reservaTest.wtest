@@ -1,12 +1,39 @@
+import especies.*
 import reservaNatural.*
 
-// describe "test de la reserva" {
+describe "test de la reserva" {
 // probar cantidadTotalBiomasa(), habitatsDesequilibrados(), 
 // probar contieneEspecie(), especieEstaEnTodosLosHabitats() etc
-	// test "x" {}
-// }
+	test "reserva con un habitat selva" {
+		const aves = new EspecieFlora()
+		const felinos = new EspecieFauna(pesoReferencia = 100, formaLocomocion = correr)
+		const scar = new Animal(especie = felinos, peso = 75)
+		const selva = new Habitat()
+		selva.agregarSerVivo(scar)
+		reserva.agregarHabitat(selva)
+		
+		assert.that(reserva.habitatConMayorBiomasa() == selva)
+		assert.equals(56.25, reserva.totalBiomasa())
+		assert.equals([selva],reserva.habitatsDesequilibrados())
+		assert.that(reserva.hayEspecie(felinos))
+		assert.notThat(reserva.hayEspecie(aves))
+	}
+}
 
-// describe "test de habitats" {
+describe "test de habitats" {
 // probar totalBiomasa(), producirIncendio(), 	
-	// test "x" {}
-// }
+	test "habitat selva con un animal de especie felino" {
+		const felinos = new EspecieFauna(pesoReferencia = 100, formaLocomocion = correr)
+		const scar = new Animal(especie = felinos, peso = 75)
+		const selva = new Habitat()
+		selva.agregarSerVivo(scar)
+		
+		assert.equals(56.25, selva.totalBiomasa())
+		assert.notThat(selva.esHabitatEnEquilibrio())
+		assert.that(selva.hayMediano())
+		
+		selva.producirIncendioEnHabitat()	// Sigue vivo, baja el peso 10%.
+		assert.equals(67.5, scar.peso())
+		assert.that(scar.estaVivo())	
+	}
+}
