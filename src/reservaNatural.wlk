@@ -51,11 +51,11 @@ class Habitat {
 	method hayEspecie(unaEspecie) = seresVivos.any({ sv => sv.especie() == unaEspecie})
 	
 	// Producir incendio
-	method producirIncendioEnHabitat(unHabitat) {
-		seresVivos.forEach({sv=>sv.consecuenciaIncendio()})
+	method producirIncendioEnHabitat() {
+		seresVivos.forEach({sv => sv.consecuenciaIncendio()})
 		seresVivos.removeAll(self.eliminarMuertos())
 	}
 
 	// Lista con los seres vivos que están muertos --> not estaVivo().	
-	method eliminarMuertos()= seresVivos.map({sv=>not sv.estaVivo()})
+	method eliminarMuertos()= seresVivos.map({sv => not sv.estaVivo()})
 }
