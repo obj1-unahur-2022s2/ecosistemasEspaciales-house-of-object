@@ -1,6 +1,5 @@
 import especies.*
 
-// object reserva.
 object reserva {
 	const property habitats = []
 	
@@ -20,7 +19,6 @@ object reserva {
 	method hayEspecie(unaEspecie) = habitats.all({ h => h.hayEspecie(unaEspecie) })
 }
 
-// class Habitat.
 class Habitat {
 	const property seresVivos = []
 	

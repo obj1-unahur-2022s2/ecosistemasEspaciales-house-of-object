@@ -2,38 +2,119 @@ import especies.*
 import reservaNatural.*
 
 describe "test de la reserva" {
-// probar cantidadTotalBiomasa(), habitatsDesequilibrados(), 
-// probar contieneEspecie(), especieEstaEnTodosLosHabitats() etc
-	test "reserva con un habitat selva" {
-		const aves = new EspecieFlora()
-		const felinos = new EspecieFauna(pesoReferencia = 100, formaLocomocion = correr)
-		const scar = new Animal(especie = felinos, peso = 75)
-		const selva = new Habitat()
-		selva.agregarSerVivo(scar)
-		reserva.agregarHabitat(selva)
+	const mar = new Habitat()
+	const selva = new Habitat()
+	const aves = new EspecieFlora()
+	const felinos = new EspecieFauna(pesoReferencia = 100, formaLocomocion = correr)
+	const cetaceos = new EspecieFauna(pesoReferencia = 200, formaLocomocion = nadar)	
+	const plantas = new EspecieFlora()		
+	const scar = new Animal(especie = felinos, peso = 75)		
+	const willy = new Animal(especie = cetaceos, peso = 120)
+	const cachalote = new Animal(especie = cetaceos, peso = 350)
+	const margarita = new Planta(especie = plantas, altura = 6)
+	const simba = new Animal(especie = felinos, peso = 30)		
 		
-		assert.that(reserva.habitatConMayorBiomasa() == selva)
-		assert.equals(56.25, reserva.totalBiomasa())
-		assert.equals([selva],reserva.habitatsDesequilibrados())
-		assert.that(reserva.hayEspecie(felinos))
+	method initialize(){
+	reserva.agregarHabitat(mar)
+	reserva.agregarHabitat(selva)			
+	mar.agregarSerVivo(willy)
+	mar.agregarSerVivo(cachalote)
+	selva.agregarSerVivo(simba)
+	selva.agregarSerVivo(margarita)
+	selva.agregarSerVivo(scar)
+	}
+// biomasa de selva es 75.25 - biomasa de mar es 684.5
+	test "mar es el habitat con mayor biomasa"{
+		assert.that(reserva.habitatConMayorBiomasa() == mar)
+		}
+		
+	test "el total de la biomasa de la reserva es 759.75(selva + mar)"{
+		assert.equals(759.75, reserva.totalBiomasa())
+	}
+	
+	test "el mar es un habitat desequilibrado porque la cantidad 
+		  de animales grandes(0) es igual a la de pequeños(0)"{
+		assert.equals([mar],reserva.habitatsDesequilibrados())
+	}
+	
+	test "hay especie plantas en todas las habitats de la reserva 
+		  ya que agregamos una margarita al mar"{ 
+		mar.agregarSerVivo(margarita)
+		assert.that(reserva.hayEspecie(plantas))
+	}	
+	
+	test "no hay especie aves en todas los habitats de la reserva
+		  ya que no agregamos aves a ningun habitat"{ 
 		assert.notThat(reserva.hayEspecie(aves))
+	}
+	
+	test "no hay especie felinos en todas los habitats de la reserva
+		  ya que solamente hay en selva."{ 
+		assert.notThat(reserva.hayEspecie(felinos))
 	}
 }
 
-describe "test de habitats" {
-// probar totalBiomasa(), producirIncendio(), 	
-	test "habitat selva con un animal de especie felino" {
-		const felinos = new EspecieFauna(pesoReferencia = 100, formaLocomocion = correr)
-		const scar = new Animal(especie = felinos, peso = 75)
+describe "test de habitats"{
 		const selva = new Habitat()
+		const felinos = new EspecieFauna(pesoReferencia = 100, formaLocomocion = correr)
+		const aves = new EspecieFauna(pesoReferencia = 30, formaLocomocion = volar)
+		const plantas = new EspecieFlora()
+		const scar = new Animal(especie = felinos, peso = 75)
+		const margarita = new Planta(especie = plantas, altura = 6)
+		const simba = new Animal(especie = felinos, peso = 30)
+
+		method initialize(){
 		selva.agregarSerVivo(scar)
+		selva.agregarSerVivo(simba)
+		selva.agregarSerVivo(margarita)
+		}
+
+
+//biomasa scar= 56.25 - biomasa margarita = 10 - biomasa simba = 9
+//scar es mediano - margarita es pequeña - simba es pequeño
+		test "total biomasa del habitat selva"{	
+		assert.equals(75.25, selva.totalBiomasa())
+		}
 		
-		assert.equals(56.25, selva.totalBiomasa())
-		assert.notThat(selva.esHabitatEnEquilibrio())
+		test "cantidad de grandes es menor a pequeños"{
+			assert.that(selva.hayCantidadGrandesMenorAPequenios())
+		}
+
+		test "Hay al menos un animal mediano en la selva"{
 		assert.that(selva.hayMediano())
+		}
+
+		test "el habitat selva debe ser un habitat en equilibrio 
+			  porque hay un mediano y la cantidad de animales grandes 
+			  es menor a pequeños"{
+		assert.that(selva.esHabitatEnEquilibrio())
+		}
 		
-		selva.producirIncendioEnHabitat()	// Sigue vivo, baja el peso 10%.
+		test "hay especie felinos"{
+		assert.that(selva.hayEspecie(felinos))	
+		}
+		
+		test "no hay especie aves"{
+		assert.notThat(selva.hayEspecie(aves))	
+		}
+		
+		test "scar sobrevive al incendio porque es mediano"{
+		selva.producirIncendioEnHabitat()
+		assert.that(scar.estaVivo())
+		}
+		
+		test "Scar pierde un 10% de su peso luego del incendio"{
+		selva.producirIncendioEnHabitat()
 		assert.equals(67.5, scar.peso())
-		assert.that(scar.estaVivo())	
-	}
+		}
+		
+		test "Margarita no sobrevive al incendio porque su tamaño es pequeña"{
+		selva.producirIncendioEnHabitat()
+		assert.notThat(margarita.estaVivo())
+		}
+		
+		test "simba no sobrevive al incendio porque es pequeño"{
+		selva.producirIncendioEnHabitat()
+		assert.notThat(simba.estaVivo())
+		}
 }

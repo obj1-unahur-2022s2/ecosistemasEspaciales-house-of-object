@@ -4,6 +4,7 @@ class EspecieFauna {
 	const animales = []
 	
 	method agregarAnimal(unAnimal) = animales.add(unAnimal)
+	
 	method biomasa() = animales.sum({a => a.biomasa()})
 }
 
@@ -12,10 +13,10 @@ class EspecieFlora {
 	const plantas = []
 	
 	method agregarPlanta(unaPlanta) = plantas.add(unaPlanta)
+	
 	method biomasa() = plantas.sum({a => a.biomasa()})
 }
 
-// class Animal.
 class Animal {
 	const property especie
 	var property peso
@@ -28,14 +29,15 @@ class Animal {
 		else mediano				
 	}
 	method esGrande() = peso > especie.pesoReferencia() * 2
+	
 	method esPequenio()= peso < especie.pesoReferencia() / 2
+	
 	method consecuenciaIncendio(){
 		if(self.especie().formaLocomocion().seSalva(self)) peso *= 0.90
 		else estaVivo=false
 	}
 }
 
-// class Planta.
 class Planta {
 	const property especie
 	var property altura
@@ -46,8 +48,11 @@ class Planta {
 		if (self.esPequenio()) pequenio
 		else grande			
 	}	
+	
 	method esGrande() = altura >=10
+	
 	method esPequenio()=not self.esGrande()
+	
 	method consecuenciaIncendio(){
 		if (self.esPequenio()) estaVivo=false 
 		else altura-=5
