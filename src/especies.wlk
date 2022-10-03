@@ -28,6 +28,7 @@ class Animal {
 		else if (self.esGrande()) grande
 		else mediano				
 	}
+	
 	method esGrande() = peso > especie.pesoReferencia() * 2
 	
 	method esPequenio()= peso < especie.pesoReferencia() / 2
