@@ -1,7 +1,7 @@
 import especies.*
 import reservaNatural.*
 
-describe "test de la reserva" {
+describe "tests de la reserva" {
 	const mar = new Habitat()
 	const selva = new Habitat()
 	const aves = new EspecieFlora()
@@ -14,107 +14,108 @@ describe "test de la reserva" {
 	const margarita = new Planta(especie = plantas, altura = 6)
 	const simba = new Animal(especie = felinos, peso = 30)		
 		
-	method initialize(){
-	reserva.agregarHabitat(mar)
-	reserva.agregarHabitat(selva)			
-	mar.agregarSerVivo(willy)
-	mar.agregarSerVivo(cachalote)
-	selva.agregarSerVivo(simba)
-	selva.agregarSerVivo(margarita)
-	selva.agregarSerVivo(scar)
+	method initialize() {
+		reserva.agregarHabitat(mar)
+		reserva.agregarHabitat(selva)			
+		mar.agregarSerVivo(willy)
+		mar.agregarSerVivo(cachalote)
+		selva.agregarSerVivo(simba)
+		selva.agregarSerVivo(margarita)
+		selva.agregarSerVivo(scar)
 	}
-// biomasa de selva es 75.25 - biomasa de mar es 684.5
-	test "mar es el habitat con mayor biomasa"{
+	
+	// Biomasa de selva es 75.25 y biomasa de mar es 684.5
+	test "mar es el habitat con mayor biomasa en la reserva" {
 		assert.that(reserva.habitatConMayorBiomasa() == mar)
-		}
+	}
 		
-	test "el total de la biomasa de la reserva es 759.75(selva + mar)"{
+	test "el total de la biomasa de la reserva es 759.75" {
 		assert.equals(759.75, reserva.totalBiomasa())
 	}
 	
 	test "el mar es un habitat desequilibrado porque la cantidad 
-		  de animales grandes(0) es igual a la de pequeños(0)"{
+		  de animales grandes (0) es igual a la de pequeños (0)" {
 		assert.equals([mar],reserva.habitatsDesequilibrados())
 	}
 	
-	test "hay especie plantas en todas las habitats de la reserva 
-		  ya que agregamos una margarita al mar"{ 
+	test "hay especie plantas en todos los habitats de la reserva 
+		  ya que agregamos una margarita al mar y ya había en selva" { 
 		mar.agregarSerVivo(margarita)
 		assert.that(reserva.hayEspecie(plantas))
 	}	
 	
-	test "no hay especie aves en todas los habitats de la reserva
-		  ya que no agregamos aves a ningun habitat"{ 
+	test "no hay especie aves en todos los habitats de la reserva
+		  ya que no agregamos aves a ningun habitat" { 
 		assert.notThat(reserva.hayEspecie(aves))
 	}
 	
-	test "no hay especie felinos en todas los habitats de la reserva
-		  ya que solamente hay en selva."{ 
+	test "no hay especie felinos en todos los habitats de la reserva
+		  ya que solamente hay en selva y no en mar" { 
 		assert.notThat(reserva.hayEspecie(felinos))
 	}
 }
 
-describe "test de habitats"{
-		const selva = new Habitat()
-		const felinos = new EspecieFauna(pesoReferencia = 100, formaLocomocion = correr)
-		const aves = new EspecieFauna(pesoReferencia = 30, formaLocomocion = volar)
-		const plantas = new EspecieFlora()
-		const scar = new Animal(especie = felinos, peso = 75)
-		const margarita = new Planta(especie = plantas, altura = 6)
-		const simba = new Animal(especie = felinos, peso = 30)
+describe "tests de habitats" {
+	const selva = new Habitat()
+	const felinos = new EspecieFauna(pesoReferencia = 100, formaLocomocion = correr)
+	const aves = new EspecieFauna(pesoReferencia = 30, formaLocomocion = volar)
+	const plantas = new EspecieFlora()
+	const scar = new Animal(especie = felinos, peso = 75)
+	const margarita = new Planta(especie = plantas, altura = 6)
+	const simba = new Animal(especie = felinos, peso = 30)
 
-		method initialize(){
+	method initialize() {
 		selva.agregarSerVivo(scar)
 		selva.agregarSerVivo(simba)
 		selva.agregarSerVivo(margarita)
-		}
+	}
 
 
-//biomasa scar= 56.25 - biomasa margarita = 10 - biomasa simba = 9
-//scar es mediano - margarita es pequeña - simba es pequeño
-		test "total biomasa del habitat selva"{	
+	// Biomasa scar = 56.25 - biomasa margarita = 10 - biomasa simba = 9
+	// Scar es mediano - margarita es pequeña - simba es pequeño.
+	test "total biomasa del habitat selva" {	
 		assert.equals(75.25, selva.totalBiomasa())
-		}
+	}
 		
-		test "cantidad de grandes es menor a pequeños"{
-			assert.that(selva.hayCantidadGrandesMenorAPequenios())
-		}
+	test "cantidad de grandes es menor a pequeños en el habitat selva" {
+		assert.that(selva.hayCantidadGrandesMenorAPequenios())
+	}
 
-		test "Hay al menos un animal mediano en la selva"{
+	test "Hay al menos un animal mediano en el habitat selva" {
 		assert.that(selva.hayMediano())
-		}
+	}
 
-		test "el habitat selva debe ser un habitat en equilibrio 
-			  porque hay un mediano y la cantidad de animales grandes 
-			  es menor a pequeños"{
+	test "el habitat selva es un habitat en equilibrio 
+		porque hay un mediano y la cantidad de animales grandes 
+		es menor a pequeños" {
 		assert.that(selva.esHabitatEnEquilibrio())
-		}
+	}
 		
-		test "hay especie felinos"{
+	test "hay especie felinos en le habitat selva" {
 		assert.that(selva.hayEspecie(felinos))	
-		}
+	}
 		
-		test "no hay especie aves"{
+	test "no hay especie aves en el habitat selva" {
 		assert.notThat(selva.hayEspecie(aves))	
-		}
+	}
 		
-		test "scar sobrevive al incendio porque es mediano"{
+	test "scar sobrevive al incendio porque es mediano" {
 		selva.producirIncendioEnHabitat()
 		assert.that(scar.estaVivo())
-		}
+	}
 		
-		test "Scar pierde un 10% de su peso luego del incendio"{
+	test "scar pierde un 10% de su peso luego del incendio" {
 		selva.producirIncendioEnHabitat()
 		assert.equals(67.5, scar.peso())
-		}
+	}
 		
-		test "Margarita no sobrevive al incendio porque su tamaño es pequeña"{
+	test "margarita no sobrevive al incendio porque su tamaño es pequeño" {
 		selva.producirIncendioEnHabitat()
 		assert.notThat(margarita.estaVivo())
-		}
+	}
 		
-		test "simba no sobrevive al incendio porque es pequeño"{
+	test "simba no sobrevive al incendio porque su tamaño es pequeño" {
 		selva.producirIncendioEnHabitat()
 		assert.notThat(simba.estaVivo())
-		}
+	}
 }
